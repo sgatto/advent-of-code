@@ -12,3 +12,6 @@ class Reader:
     def commands(self):
         commands = [l.split() for l in self.lines()]
         return [(c[0], int(c[1])) for c in commands]
+
+    def digits(self):
+        return [[int(char) for char in l] for l in self.lines()]
