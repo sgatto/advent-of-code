@@ -4,6 +4,7 @@ import unittest
 
 from reader.bingo_reader import BingoReader
 from reader.file_reader import Reader
+from reader.segments_reader import SegmentsReader
 
 
 class ReaderTest(unittest.TestCase):
@@ -58,14 +59,22 @@ class TestBingoReader(unittest.TestCase):
         lines = Reader(file).lines()
         self.assertEqual(draws, BingoReader(lines).draws())
         board1 = [[22, 13, 17, 11, 0],
-                 [8, 2, 23, 4, 24],
-                 [21, 9, 14, 16, 7],
-                 [6, 10, 3, 18, 5],
-                 [1, 12, 20, 15, 19]]
+                  [8, 2, 23, 4, 24],
+                  [21, 9, 14, 16, 7],
+                  [6, 10, 3, 18, 5],
+                  [1, 12, 20, 15, 19]]
         board2 = [[12, 23, 17, 11, 0],
-                 [44, 2, 23, 4, 24],
-                 [12, 29, 14, 16, 7],
-                 [1, 21, 3, 18, 5],
-                 [11, 22, 20, 15, 19]]
+                  [44, 2, 23, 4, 24],
+                  [12, 29, 14, 16, 7],
+                  [1, 21, 3, 18, 5],
+                  [11, 22, 20, 15, 19]]
         self.assertEqual(board1, BingoReader(lines).boards()[0])
         self.assertEqual(board2, BingoReader(lines).boards()[1])
+
+
+class TestSegmentReader(unittest.TestCase):
+    def test_one_line_returns_couple_of_couples(self):
+        lines = ["0,9 -> 5,9", "8,0 -> 0,8"]
+        segment1 = ((0,9),(5,9))
+        segment2 = ((8,0),(0,8))
+        self.assertEqual([segment1, segment2], SegmentsReader(lines).segments())
