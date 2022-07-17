@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Reader:
     def __init__(self, file):
         with open(file) as f:
@@ -6,7 +9,7 @@ class Reader:
     def depth_readings(self):
         return [int(s) for s in self.content.splitlines()]
 
-    def lines(self):
+    def lines(self) -> List[str]:
         return self.content.splitlines()
 
     def commands(self):
