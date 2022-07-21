@@ -11,7 +11,13 @@ class Crabs:
         return self._get_cost_type_1(round(self.median))
 
     def cost_2(self):
-        return self._get_cost_type_2(round(self.mean))
+        left = min(round(self.median), round(self.mean))
+        right = max(round(self.median), round(self.mean))
+        N = right + 1 - left
+        costs = np.zeros(N)
+        for i in range(N):
+            costs[i] = self._get_cost_type_2(left + i)
+        return int(np.min(costs))
 
     def _get_cost_type_1(self, center):
         differences = self.positions - center
@@ -21,5 +27,5 @@ class Crabs:
     def _get_cost_type_2(self, center):
         differences = self.positions - center
         abs_diff = abs(differences)
-        return np.sum(0.5*abs_diff*(abs_diff-1))
+        return np.sum(0.5*abs_diff*(abs_diff+1))
 
